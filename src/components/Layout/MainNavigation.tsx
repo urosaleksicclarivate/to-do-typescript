@@ -5,6 +5,10 @@ import classes from "./MainNavigation.module.css";
 const MainNavigation = () => {
   const authCtx = useContext(AuthContext);
 
+  const handleLogout = (e: React.MouseEvent) => {
+    authCtx.logout();
+  };
+
   return (
     <header className={classes.header}>
       <Link to="/">
@@ -24,7 +28,7 @@ const MainNavigation = () => {
           )}
           {authCtx.isLoggedIn && (
             <li>
-              <button>Logout</button>
+              <button onClick={handleLogout}>Logout</button>
             </li>
           )}
         </ul>
