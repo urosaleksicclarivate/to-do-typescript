@@ -20,7 +20,7 @@ interface Props {
   children: React.ReactNode;
 }
 
-const AuthContextProvider: React.FC<Props> = (props: Props) => {
+export const AuthContextProvider: React.FC<Props> = (props: Props) => {
   const [token, setToken] = useState("");
   const [userId, setUserId] = useState<number>();
   const isLoggedIn = token ? true : false;
