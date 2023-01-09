@@ -1,4 +1,6 @@
-const HomePage = () => {
-  return <div>Hello from home page!</div>;
+import HomeComponent from "../components/Home/HomeComponent";
+
+const HomePage: React.FC = () => {
+  return <HomeComponent />;
 };
 export default HomePage;
