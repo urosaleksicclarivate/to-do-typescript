@@ -23,8 +23,13 @@ const Tasks: React.FC = () => {
       );
       if (response.ok) {
         const data = await response.json();
-        console.log(data.todos);
-        setTasks(data.todos);
+        const arrayOfObjects: any[] = data.todos;
+        const arrayOfTasks = arrayOfObjects.map((o) => {
+          console.log(o.isCompleted);
+          return new Task(o.title, o.userId, o.isCompleted, o.id);
+        });
+        console.log(arrayOfTasks);
+        setTasks(arrayOfTasks);
       } else {
         throw new Error("Error with fetch: " + response.statusText);
       }
@@ -39,7 +44,7 @@ const Tasks: React.FC = () => {
       return;
     }
 
-    const task = new Task(title, authCtx.userId);
+    const task = new Task(title, authCtx.userId, false);
     try {
       const response = await fetch("http://localhost:3000/660/todos/", {
         method: "POST",
@@ -50,6 +55,7 @@ const Tasks: React.FC = () => {
         },
       });
       if (response.ok) {
+        fetchData();
       } else {
         throw new Error("Error with fetch: " + response.statusText);
       }
@@ -63,7 +69,7 @@ const Tasks: React.FC = () => {
   return (
     <div>
       HEADER
-      <ListOfItems />
+      <ListOfItems items={tasks} />
       <NewItem handleAdd={handleAdd} />
     </div>
   );

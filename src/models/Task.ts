@@ -1,14 +1,19 @@
-interface CustomType {}
 class Task {
-  // id?: number;
+  id?: number;
   title: string;
-  isCompleted: boolean = false;
+  isCompleted: boolean;
   userId: number;
-  constructor(title: string, userId: number, id?: number) {
+
+  constructor(
+    title: string,
+    userId: number,
+    isCompleted: boolean,
+    id?: number
+  ) {
     this.title = title;
+    this.isCompleted = isCompleted;
     this.userId = userId;
-    // this.id = id;
+    this.id = id;
   }
-  // constructor(obj:)
 }
 export default Task;
