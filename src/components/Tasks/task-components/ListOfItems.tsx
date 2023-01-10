@@ -3,10 +3,13 @@ import Item from "./Item";
 
 interface Props {
   items: Task[];
+  handleDelete: (id: number) => void;
 }
 const ListOfItems: React.FC<Props> = (props: Props) => {
   const handleOnChange = () => {};
-  const handleDelete = () => {};
+  const handleDelete = (id: number) => {
+    props.handleDelete(id);
+  };
   return (
     <div>
       {props.items.map((item) => {

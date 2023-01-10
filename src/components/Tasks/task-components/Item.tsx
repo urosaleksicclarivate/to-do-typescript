@@ -8,15 +8,18 @@ interface Props {
   isCompleted: boolean;
   id: number;
   handleOnChange: () => void;
-  handleDelete: () => void;
+  handleDelete: (id: number) => void;
 }
 const Item: React.FC<Props> = (props: Props) => {
-  console.log(typeof props.isCompleted);
+  const handleDelete = () => {
+    props.handleDelete(props.id);
+  };
+
   return (
     <div className="task">
       <Checkbox isCompleted={props.isCompleted} />
       <Title title={props.title} isCompleted={props.isCompleted} />
-      <Delete />
+      <Delete handleDelete={handleDelete} />
     </div>
   );
 };

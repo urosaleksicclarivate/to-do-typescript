@@ -62,6 +62,24 @@ const Tasks: React.FC = () => {
     } catch (error) {}
   };
 
+  const handleDelete = async (id: number) => {
+    try {
+      const response = await fetch(`http://localhost:3000/660/todos/${id}`, {
+        method: "DELETE",
+        headers: {
+          Authorization: "Bearer " + authCtx.token,
+        },
+      });
+      if (response.ok) {
+        fetchData();
+      } else {
+        throw new Error("Error with fetch: " + response.statusText);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   useEffect(() => {
     fetchData();
   }, []);
@@ -69,7 +87,7 @@ const Tasks: React.FC = () => {
   return (
     <div>
       HEADER
-      <ListOfItems items={tasks} />
+      <ListOfItems items={tasks} handleDelete={handleDelete} />
       <NewItem handleAdd={handleAdd} />
     </div>
   );
