@@ -5,10 +5,12 @@ import ListOfItems from "./ListOfItems";
 import NewItem from "./NewItem";
 import classes from "./task-components-css/Tasks.module.css";
 import React, { useState, useEffect } from "react";
+import Header from "./Header";
 
 const Tasks: React.FC = () => {
   const authCtx = useContext(AuthContext);
   const [tasks, setTasks] = useState<Task[]>([]);
+  const [numOfCompleted, setNumOfCompleted] = useState<number>(0);
 
   const fetchData = async () => {
     try {
@@ -23,13 +25,15 @@ const Tasks: React.FC = () => {
         }
       );
       if (response.ok) {
+        let counter = 0;
         const data = await response.json();
         const arrayOfObjects: any[] = data.todos;
         const arrayOfTasks = arrayOfObjects.map((o) => {
+          if (o.isCompleted) counter = counter + 1;
           return new Task(o.title, o.userId, o.isCompleted, o.id);
         });
-        console.log(arrayOfTasks);
         setTasks(arrayOfTasks);
+        setNumOfCompleted(counter);
       } else {
         throw new Error("Error with fetch: " + response.statusText);
       }
@@ -113,7 +117,7 @@ const Tasks: React.FC = () => {
 
   return (
     <div>
-      HEADER
+      <Header total={tasks.length} numOfCompleted={numOfCompleted} />
       <ListOfItems
         items={tasks}
         handleDelete={handleDelete}
