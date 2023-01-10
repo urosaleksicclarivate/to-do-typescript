@@ -26,7 +26,7 @@ const Tasks: React.FC = () => {
         const data = await response.json();
         const arrayOfObjects: any[] = data.todos;
         const arrayOfTasks = arrayOfObjects.map((o) => {
-          return new Task(o.title, o.userId, !o.isCompleted, o.id);
+          return new Task(o.title, o.userId, o.isCompleted, o.id);
         });
         console.log(arrayOfTasks);
         setTasks(arrayOfTasks);
@@ -87,7 +87,7 @@ const Tasks: React.FC = () => {
       alert("Something went wrong, try later!");
       return;
     }
-    const task = new Task(item.title, item.userId, item.isCompleted);
+    const task = new Task(item.title, item.userId, !item.isCompleted);
     try {
       const response = await fetch(`http://localhost:3000/660/todos/${id}`, {
         method: "PATCH",
