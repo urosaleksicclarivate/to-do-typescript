@@ -1,8 +1,11 @@
 interface Props {
   isCompleted: boolean;
+  handleOnChange: () => void;
 }
 const Checkbox: React.FC<Props> = (props: Props) => {
-  const handleOnChange = () => {};
+  const handleOnChange = () => {
+    props.handleOnChange();
+  };
 
   return (
     <input

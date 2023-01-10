@@ -4,9 +4,12 @@ import Item from "./Item";
 interface Props {
   items: Task[];
   handleDelete: (id: number) => void;
+  handleOnChange: (id: number) => void;
 }
 const ListOfItems: React.FC<Props> = (props: Props) => {
-  const handleOnChange = () => {};
+  const handleOnChange = (id: number) => {
+    props.handleOnChange(id);
+  };
   const handleDelete = (id: number) => {
     props.handleDelete(id);
   };

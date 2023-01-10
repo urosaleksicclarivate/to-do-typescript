@@ -17,6 +17,7 @@ const Tasks: React.FC = () => {
         {
           method: "GET",
           headers: {
+            "Content-Type": "application/json",
             Authorization: "Bearer " + authCtx.token,
           },
         }
@@ -25,8 +26,7 @@ const Tasks: React.FC = () => {
         const data = await response.json();
         const arrayOfObjects: any[] = data.todos;
         const arrayOfTasks = arrayOfObjects.map((o) => {
-          console.log(o.isCompleted);
-          return new Task(o.title, o.userId, o.isCompleted, o.id);
+          return new Task(o.title, o.userId, !o.isCompleted, o.id);
         });
         console.log(arrayOfTasks);
         setTasks(arrayOfTasks);
@@ -80,6 +80,33 @@ const Tasks: React.FC = () => {
     }
   };
 
+  const handleOnChange = async (id: number) => {
+    //ovde se dobije ili task ili undefined, hendluj undefined
+    const item = tasks.find((el) => el.id === id);
+    if (item === undefined) {
+      alert("Something went wrong, try later!");
+      return;
+    }
+    const task = new Task(item.title, item.userId, item.isCompleted);
+    try {
+      const response = await fetch(`http://localhost:3000/660/todos/${id}`, {
+        method: "PATCH",
+        body: JSON.stringify(task),
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + authCtx.token,
+        },
+      });
+      if (response.ok) {
+        fetchData();
+      } else {
+        throw new Error("Error with fetch: " + response.ok);
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   useEffect(() => {
     fetchData();
   }, []);
@@ -87,7 +114,11 @@ const Tasks: React.FC = () => {
   return (
     <div>
       HEADER
-      <ListOfItems items={tasks} handleDelete={handleDelete} />
+      <ListOfItems
+        items={tasks}
+        handleDelete={handleDelete}
+        handleOnChange={handleOnChange}
+      />
       <NewItem handleAdd={handleAdd} />
     </div>
   );
