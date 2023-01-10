@@ -6,6 +6,7 @@ interface Props {
   handleDelete: (id: number) => void;
   handleOnChange: (id: number) => void;
 }
+
 const ListOfItems: React.FC<Props> = (props: Props) => {
   const handleOnChange = (id: number) => {
     props.handleOnChange(id);

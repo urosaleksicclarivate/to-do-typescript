@@ -7,6 +7,7 @@ import TasksComponent from "./components/Tasks/TasksComponent";
 import AuthContext from "./context/auth-context";
 import AuthPage from "./pages/AuthPage";
 import HomePage from "./pages/HomePage";
+import TasksPage from "./pages/TasksPage";
 function App() {
   const authCtx = useContext(AuthContext);
   return (
@@ -22,7 +23,7 @@ function App() {
 
         {authCtx.isLoggedIn && (
           <Route path="/tasks">
-            <TasksComponent />
+            <TasksPage />
           </Route>
         )}
 

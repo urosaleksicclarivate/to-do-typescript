@@ -33,35 +33,45 @@ const AuthComponent: React.FC = () => {
         throw new Error(`Error with fetch:${response.statusText}`);
       }
     } catch (error) {
+      alert("Something went wrong, try again!");
       console.error(error);
     }
   };
 
   const register = async (user: User) => {
-    //implementiraj logiku za sifru kracu od 4 karaktera
     try {
-      const resposne = await fetch("http://localhost:3000/register", {
+      const response = await fetch("http://localhost:3000/register", {
         method: "POST",
         body: JSON.stringify(user),
         headers: {
           "Content-Type": "application/json",
         },
       });
-      if (resposne.ok) {
+      if (response.ok) {
         alert("Successfully created!");
         setIsLogin(true);
       } else {
-        throw new Error("Error with fecth: " + resposne.statusText);
+        throw new Error("Error with fetch: " + response.statusText);
       }
     } catch (error) {
+      alert("Something went wrong, try again!");
       console.error(error);
     }
   };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    const enteredEmail = emailRef.current!.value;
-    const enteredPassword = passwordRef.current!.value;
+    if (emailRef.current === null || passwordRef.current === null) {
+      alert("Something went wrong, try later!");
+      console.error("Check emailRef and passwordRef");
+      return;
+    }
+    const enteredEmail = emailRef.current.value.trim();
+    const enteredPassword = passwordRef.current.value.trim();
+    if (enteredPassword.length < 4) {
+      alert("Password should be atleast 4 characters long!");
+      return;
+    }
     const user = new User(enteredEmail, enteredPassword);
     isLogin ? login(user) : register(user);
   };

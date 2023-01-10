@@ -4,7 +4,7 @@ import Task from "../../../models/Task";
 import ListOfItems from "./ListOfItems";
 import NewItem from "./NewItem";
 import classes from "./task-components-css/Tasks.module.css";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import Header from "./Header";
 
 const Tasks: React.FC = () => {
@@ -12,7 +12,7 @@ const Tasks: React.FC = () => {
   const [tasks, setTasks] = useState<Task[]>([]);
   const [numOfCompleted, setNumOfCompleted] = useState<number>(0);
 
-  const fetchData = async () => {
+  const fetchData = useCallback(async () => {
     try {
       const response = await fetch(
         `http://localhost:3000/660/users/${authCtx.userId}?_embed=todos`,
@@ -26,6 +26,7 @@ const Tasks: React.FC = () => {
       );
       if (response.ok) {
         let counter = 0;
+        //ovde nisam siguran kako se hendluje, pitaj Zeljka!!!!!!!
         const data = await response.json();
         const arrayOfObjects: any[] = data.todos;
         const arrayOfTasks = arrayOfObjects.map((o) => {
@@ -40,14 +41,9 @@ const Tasks: React.FC = () => {
     } catch (error) {
       console.error(error);
     }
-  };
+  }, []);
 
   const handleAdd = async (title: string) => {
-    if (authCtx.userId === undefined) {
-      alert("Impossible to add task !");
-      return;
-    }
-
     const task = new Task(title, authCtx.userId, false);
     try {
       const response = await fetch("http://localhost:3000/660/todos/", {
@@ -63,7 +59,10 @@ const Tasks: React.FC = () => {
       } else {
         throw new Error("Error with fetch: " + response.statusText);
       }
-    } catch (error) {}
+    } catch (error) {
+      console.error(error);
+      alert("Failed to insert, try again!");
+    }
   };
 
   const handleDelete = async (id: number) => {
@@ -81,14 +80,14 @@ const Tasks: React.FC = () => {
       }
     } catch (error) {
       console.log(error);
+      alert("Failed to delete, try again!");
     }
   };
 
   const handleOnChange = async (id: number) => {
-    //ovde se dobije ili task ili undefined, hendluj undefined
     const item = tasks.find((el) => el.id === id);
     if (item === undefined) {
-      alert("Something went wrong, try later!");
+      alert("Something went wrong, try again!");
       return;
     }
     const task = new Task(item.title, item.userId, !item.isCompleted);
@@ -108,12 +107,13 @@ const Tasks: React.FC = () => {
       }
     } catch (error) {
       console.error(error);
+      alert("Something went wrong, try again!");
     }
   };
 
   useEffect(() => {
     fetchData();
-  }, []);
+  }, [fetchData]);
 
   return (
     <div>
