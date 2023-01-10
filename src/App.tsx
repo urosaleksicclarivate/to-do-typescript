@@ -5,6 +5,7 @@ import AuthComponent from "./components/Auth/AuthComponent";
 import Layout from "./components/Layout/Layout";
 import TasksComponent from "./components/Tasks/TasksComponent";
 import AuthContext from "./context/auth-context";
+import AuthPage from "./pages/AuthPage";
 import HomePage from "./pages/HomePage";
 function App() {
   const authCtx = useContext(AuthContext);
@@ -16,7 +17,7 @@ function App() {
         </Route>
 
         <Route path="/auth">
-          <AuthComponent />
+          <AuthPage />
         </Route>
 
         {authCtx.isLoggedIn && (
