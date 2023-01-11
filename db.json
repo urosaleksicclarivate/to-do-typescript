@@ -1,0 +1,78 @@
+{
+  "users": [
+    {
+      "email": "uros@gmail.com",
+      "password": "$2a$10$G4Oa2MfRMVvGofcdgEN9mukLKtI7Oj0aI9xI4aQcp3YJLtyllTi6K",
+      "id": 2
+    },
+    {
+      "email": "test@test.com",
+      "password": "$2a$10$9P32s.UogRZiRp3SkGx60.1pQ3ExmyJJI3GUJfBqXmN265lMFxHve",
+      "id": 3
+    },
+    {
+      "email": "aa@aaa.com",
+      "password": "$2a$10$6RndwYjkF9uWaWN3MZlOceP4s81VC2rjDALU1s5rymFmLr09p2JZu",
+      "id": 4
+    },
+    {
+      "email": "123@123",
+      "password": "$2a$10$k6MC6UWdbixp43MOqe3B../g3CoUTHxXiG9QMS/pupNhZd34bDf1W",
+      "id": 5
+    },
+    {
+      "email": "1@1",
+      "password": "$2a$10$KyKqdZqOBEtm2zRuY8IlNOjUtc9T89mcKq3kYuMHge50FBlJBLL1a",
+      "id": 6
+    },
+    {
+      "email": "test@test",
+      "password": "$2a$10$3syvuNBFM5bmjoE9okM/Du3BdDkOfiao5Fip6aFRB69zWkJ6DeCgC",
+      "id": 7
+    }
+  ],
+  "todos": [
+    {
+      "title": "treci task",
+      "isCompleted": true,
+      "userId": 2,
+      "id": 7
+    },
+    {
+      "title": "prvi task drugog korisnika",
+      "isCompleted": false,
+      "userId": 3,
+      "id": 8
+    },
+    {
+      "title": "asd",
+      "isCompleted": false,
+      "userId": 2,
+      "id": 9
+    },
+    {
+      "title": "a",
+      "isCompleted": false,
+      "userId": 3,
+      "id": 11
+    },
+    {
+      "title": "q",
+      "isCompleted": true,
+      "userId": 2,
+      "id": 12
+    },
+    {
+      "title": "asd",
+      "isCompleted": false,
+      "userId": 6,
+      "id": 14
+    },
+    {
+      "title": "Learn React",
+      "isCompleted": false,
+      "userId": 6,
+      "id": 15
+    }
+  ]
+}
