@@ -9,9 +9,17 @@ const NewItem: React.FC<Props> = (props: Props) => {
 
   const handleAdd = (e: React.FormEvent) => {
     e.preventDefault();
-    const title = inputRef.current!.value;
+    if (inputRef.current === null) {
+      alert("Impossible to add new item!");
+      return;
+    }
+    const title = inputRef.current.value.trim();
+    if (title === "") {
+      alert("Please insert something!");
+      return;
+    }
     props.handleAdd(title);
-    inputRef.current!.value = "";
+    inputRef.current.value = "";
   };
 
   return (

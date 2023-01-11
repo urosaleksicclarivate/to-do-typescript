@@ -32,6 +32,7 @@ const ModifyForm: React.FC<Props> = (props: Props) => {
     if (response) {
       alert("Successfully changed!");
       props.handleModal();
+      return;
     }
     alert("Something went wrong, try again!");
   };
