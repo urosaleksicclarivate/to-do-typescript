@@ -3,7 +3,6 @@ import AuthContext from "../../../context/auth-context";
 import Task from "../../../models/Task";
 import ListOfItems from "./ListOfItems";
 import NewItem from "./NewItem";
-import classes from "./task-components-css/Tasks.module.css";
 import React, { useState, useEffect, useCallback } from "react";
 import Header from "./Header";
 
@@ -41,7 +40,7 @@ const Tasks: React.FC = () => {
     } catch (error) {
       console.error(error);
     }
-  }, []);
+  }, [authCtx.token, authCtx.userId]);
 
   const handleAdd = async (title: string) => {
     const task = new Task(title, authCtx.userId, false);
@@ -111,6 +110,34 @@ const Tasks: React.FC = () => {
     }
   };
 
+  const handleModify = async (modifiedTitle: string, id: number) => {
+    const item = tasks.find((el) => el.id === id);
+    if (item === undefined) {
+      alert("Impossible to modify this item!");
+      return false;
+    }
+    const task = new Task(modifiedTitle, item.userId, item.isCompleted);
+    try {
+      const response = await fetch(`http://localhost:3000/660/todos/${id}`, {
+        method: "PATCH",
+        body: JSON.stringify(task),
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + authCtx.token,
+        },
+      });
+      if (response.ok) {
+        fetchData();
+        return true;
+      } else {
+        throw new Error("Error with fetch: " + response.statusText);
+      }
+    } catch (error) {
+      console.error(error);
+      return false;
+    }
+  };
+
   useEffect(() => {
     fetchData();
   }, [fetchData]);
@@ -122,6 +149,7 @@ const Tasks: React.FC = () => {
         items={tasks}
         handleDelete={handleDelete}
         handleOnChange={handleOnChange}
+        handleModify={handleModify}
       />
       <NewItem handleAdd={handleAdd} />
     </div>
