@@ -27,6 +27,14 @@ const AuthComponent: React.FC = () => {
       if (response.ok) {
         const data = await response.json();
         console.log(data);
+        if (
+          typeof data.accessToken !== "string" ||
+          data.accessToken === "" ||
+          typeof data.user.id !== "number" ||
+          isNaN(data.user.id)
+        )
+          throw new Error("Error with fetched object!");
+
         authCtx.login(data.accessToken, data.user.id);
         history.replace("/");
       } else {
