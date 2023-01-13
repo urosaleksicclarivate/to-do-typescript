@@ -12,13 +12,13 @@ const ModifyForm: React.FC<Props> = (props: Props) => {
     props.handleModal();
   };
 
-  const handleModify = async () => {
+  const handleModify = async (e: React.FormEvent) => {
+    e.preventDefault();
     if (inputRef.current === null) {
       alert("Impossible to modify at this moment!");
       props.handleModal();
       return;
     }
-
     const modifiedTitle = inputRef.current.value.trim();
     if (modifiedTitle === "") {
       alert("Field is empty, please insert something!");
@@ -27,7 +27,6 @@ const ModifyForm: React.FC<Props> = (props: Props) => {
       alert("You must change something!");
       return;
     }
-
     const response = await props.handleModify(modifiedTitle);
     if (response) {
       alert("Successfully changed!");
@@ -41,14 +40,16 @@ const ModifyForm: React.FC<Props> = (props: Props) => {
     <div className="modal-backdrop">
       <div className="modal">
         <h1>Task:</h1>
-        <input
-          className="input"
-          defaultValue={props.title}
-          autoFocus={true}
-          ref={inputRef}
-        ></input>
-        <button onClick={handleModify}>Change</button>
-        <button onClick={handleModal}>Cancel</button>
+        <form onSubmit={handleModify}>
+          <input
+            className="input"
+            defaultValue={props.title}
+            autoFocus={true}
+            ref={inputRef}
+          ></input>
+          <button>Change</button>
+          <button onClick={handleModal}>Cancel</button>
+        </form>
       </div>
     </div>
   );
